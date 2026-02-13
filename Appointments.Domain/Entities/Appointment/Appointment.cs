@@ -1,12 +1,9 @@
+using Appointments.Domain.Common;
+
 namespace Appointments.Domain.Entities.Appointment;
 
-public class Appointment
+public class Appointment: BaseEntity<Guid>
 {
-    /// <summary>
-    /// Id of the appointment
-    /// </summary>
-    public Guid Id { get; init; }
-
     /// <summary>
     /// Starttime of the appointment
     /// </summary>
