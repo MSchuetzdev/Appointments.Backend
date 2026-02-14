@@ -10,5 +10,11 @@
         <ProjectReference Include="..\Appointments.Application\Appointments.Application.csproj" />
         <ProjectReference Include="..\Appointments.Domain\Appointments.Domain.csproj"/>
     </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Dapper" Version="2.1.66" />
+      <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.0-preview3.25342.7" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="11.0.0-preview.1.26104.118" />
+    </ItemGroup>
     
 </Project>

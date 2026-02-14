@@ -20,12 +20,12 @@ public class Startup
     private IConfiguration Configuration { get; }
 
 
-    public void ConfigureServices(IServiceCollection services)
+    public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
         
         // Setup DDD-Structure
         services.AddApplication();
-        services.AddInfrastructure();
+        services.AddInfrastructure(configuration);
         
     }
 }
