@@ -1,4 +1,4 @@
-namespace Appointments.Application.Interfaces.Repositories;
+namespace Appointments.Application.Common.Interfaces.Repositories;
 
 public interface IBaseRepository<TEntity>
 {
