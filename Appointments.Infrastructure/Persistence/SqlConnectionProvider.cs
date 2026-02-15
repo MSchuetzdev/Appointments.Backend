@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using Appointments.Infrastructure.Common.Interfaces;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using Npgsql;
 
 namespace Appointments.Infrastructure.Persistence;
 
@@ -19,7 +20,7 @@ public class SqlConnectionProvider(IConfiguration configuration) : ISqlConnectio
             throw new Exception($"Connectionstring: {connectionString} was not found");
         }
 
-        var connection = new SqlConnection(connectionString);
+        var connection = new NpgsqlConnection(connectionString);
 
         await connection.OpenAsync();
         return connection;

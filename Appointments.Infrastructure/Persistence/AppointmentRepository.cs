@@ -1,3 +1,4 @@
+using Appointments.Application.Commands;
 using Appointments.Application.Common.Interfaces.Repositories;
 using Appointments.Domain.Entities.Appointment;
 using Appointments.Domain.Entities.Customer;
@@ -7,27 +8,34 @@ using Dapper;
 
 namespace Appointments.Infrastructure.Persistence;
 
-public class AppointmentRepository(ISqlConnectionProvider sqlConnectionProvider)
+public class AppointmentRepository(
+    ISqlConnectionProvider sqlConnectionProvider
+)
     : IAppointmentRepository, IReadRepository<Appointment>
 {
-    public Task<Appointment> CreateAsync(Appointment entity)
+    public async Task<Appointment> CreateAsync(CreateAppointmentCommand entity)
     {
-        throw new NotImplementedException();
-    }
+        const string createQuery = """
+                                   INSERT INTO appointments a (name, start_time, end_time)
+                                   VALUES (:Name, :StartTime, :EndTime);
+                                   RETURNING id; 
 
-    public Task<Appointment> UpdateAsync(Appointment entity)
-    {
-        throw new NotImplementedException();
-    }
 
-    public Task<Appointment> DeleteAsync(Appointment entity)
-    {
-        throw new NotImplementedException();
-    }
+                                   INSERT INTO customers(person_id, appointment_id)
+                                   VALUES (:PersonId, a.id);
+                                   """;
 
-    public Task<Appointment> CreateAsync(int test)
-    {
-        throw new NotImplementedException();
+        using var connection = await sqlConnectionProvider.GetConnection("default");
+
+        var appointmentId = await connection.ExecuteScalarAsync<Guid>(createQuery, new
+        {
+            entity.Name,
+            entity.StartTime,
+            entity.EndTime,
+            entity.PersonId
+        });
+
+        return await GetByIdAsync(appointmentId);
     }
 
     public async Task<IEnumerable<Appointment>> GetAsync(string sqlFilter, object param)
@@ -48,7 +56,7 @@ public class AppointmentRepository(ISqlConnectionProvider sqlConnectionProvider)
                                  c.appointment_id = a.appointment_id;
                                  """;
 
- 
+
         using var connection = await sqlConnectionProvider.GetConnection("default");
 
         await using var reader = await connection.QueryMultipleAsync(sqlFilter + baseQuery, param);
@@ -69,12 +77,28 @@ public class AppointmentRepository(ISqlConnectionProvider sqlConnectionProvider)
                         Id = customer.Id,
                         Firstname = customer.Firstname,
                         Lastname = customer.Lastname,
-                        PersonId = customer.PersonId
-                    }; 
+                        PersonId = customer.PersonId,
+                    };
                 }
             }
         }
 
-        return appointments; 
+        return appointments;
+    }
+
+    public async Task<Appointment> GetByIdAsync(Guid id)
+    {
+        const string sqlFilter = """
+                                 CREATE TEMP TABLE TempAppointments (id GUID PRIMARY KEY);
+
+                                 INSERT INTO TempAppointments (id)
+                                 WHERE id = :Id; 
+                                 """; 
+
+        object param = new { Id = id };
+
+        var res = (await GetAsync(sqlFilter, param)).FirstOrDefault();
+
+        return res ?? new Appointment();
     }
 }

@@ -1,29 +1,22 @@
-using Appointments.Application;
-using Appointments.Infrastructure;
+using Dapper;
+
+namespace Appointments.Api;
 
 public class Program
 {
-    public static async Task Main(string[] args)
+    public static Task Main(string[] args)
     {
-        var configurationBuilder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", false, true);
+        DefaultTypeMap.MatchNamesWithUnderscores = true;
 
-        var configuration = configurationBuilder.Build();
+        return CreateHostBuilder(args).Build().RunAsync();
     }
 
 
-    public static IHost ConfigureServices(string[] args, IConfiguration configuration)
+    private static IHostBuilder CreateHostBuilder(string[] args)
     {
-        return Host.CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration(builder =>
-            {
-                builder.Sources.Clear();
-                builder.AddConfiguration(configuration);
-            }).ConfigureServices(services =>
-            {
-                services.AddApplication();
-                services.AddInfrastructure(configuration);
-            }).Build();
+        return Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder.UseStartup<Startup>();
+        });
     }
 }

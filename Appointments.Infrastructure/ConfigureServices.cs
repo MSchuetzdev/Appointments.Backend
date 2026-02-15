@@ -1,4 +1,5 @@
 using Appointments.Application.Common.Interfaces.Repositories;
+using Appointments.Infrastructure.Common.Interfaces;
 using Appointments.Infrastructure.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,5 +11,6 @@ public static class ConfigureServices
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<IAppointmentRepository, AppointmentRepository>(); 
+        services.AddSingleton<ISqlConnectionProvider, SqlConnectionProvider>();
     }
 }

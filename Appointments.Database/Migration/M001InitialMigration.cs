@@ -28,6 +28,11 @@ public class M001InitialMigration : FluentMigrator.Migration
             .WithColumn("start_time").AsDateTime().NotNullable()
             .WithColumn("end_time").AsDateTime().NotNullable();
 
+        Create.Table("customers")
+            .WithColumn("id").AsGuid().NotNullable().PrimaryKey().WithDefaultValue(Guid.NewGuid())
+            .WithColumn("person_id").AsGuid().NotNullable().ForeignKey("persons", "id")
+            .WithColumn("appointment_id").AsGuid().NotNullable().ForeignKey("appointments", "id");
+
         Create.Table("appointment_employees")
             .WithColumn("id").AsGuid().NotNullable().PrimaryKey().WithDefaultValue(Guid.NewGuid())
             .WithColumn("appointment_id").AsGuid().NotNullable().ForeignKey("appointments", "id")

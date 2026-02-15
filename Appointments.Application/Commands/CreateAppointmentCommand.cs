@@ -1,12 +1,16 @@
 using Appointments.Application.Common.Interfaces.Repositories;
 using Appointments.Domain.Entities.Appointment;
-using Appointments.Domain.Entities.Customer;
 using MediatR;
 
 namespace Appointments.Application.Commands;
 
-public class CreateAppointmentCommand : IRequest
+public class CreateAppointmentCommand : IRequest<Appointment>
 {
+    /// <summary>
+    /// Name of the appointment that will be created 
+    /// </summary>
+    public string Name { get; set; } = ""; 
+    
     /// <summary>
     /// Starttime of the appointment that will be created
     /// </summary>
@@ -18,10 +22,10 @@ public class CreateAppointmentCommand : IRequest
     public DateTime EndTime { get; set; }
 
     /// <summary>
-    /// Customers of the appointment
+    /// Id of the person 
     /// </summary>
-    public Customer Customer { get; set; } = new Customer();
-
+    public Guid PersonId { get; set; }
+    
     /// <summary>
     /// Check start is before end
     /// </summary>
@@ -35,24 +39,15 @@ public class CreateAppointmentCommand : IRequest
 public class CreateAppointmentCommandHandler(
     IAppointmentRepository appointmentRepository
 )
-    : IRequestHandler<CreateAppointmentCommand>
+    : IRequestHandler<CreateAppointmentCommand, Appointment>
 {
-    public async Task Handle(CreateAppointmentCommand request, CancellationToken cancellationToken)
+    public async Task<Appointment> Handle(CreateAppointmentCommand request, CancellationToken cancellationToken)
     {
-        var appointmentEntity = new Appointment()
-        {
-            Id = Guid.NewGuid(),
-            StartTime = request.StartTime,
-            EndTime = request.EndTime,
-            Customer = request.Customer
-        };
-
         if (!request.IsStartBeforeEndtime())
         {
             throw new Exception("Start time must be before end time");
         }
 
-
-        var appointment = await appointmentRepository.CreateAsync(appointmentEntity);
+        return await appointmentRepository.CreateAsync(request);
     }
 }

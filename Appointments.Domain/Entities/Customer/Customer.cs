@@ -1,15 +1,12 @@
+using Appointments.Domain.Common;
+
 namespace Appointments.Domain.Entities.Customer;
 
 /// <summary>
 /// Represents a customer
 /// </summary>
-public class Customer
+public class Customer: BaseEntity<Guid>
 {
-    /// <summary>
-    /// Id of the customer
-    /// </summary>
-    public Guid Id { get; init; }
-
     /// <summary>
     /// Firstname of the customer 
     /// </summary>
@@ -24,9 +21,4 @@ public class Customer
     /// Id of the person 
     /// </summary>
     public Guid PersonId { get; init; }
-
-    /// <summary>
-    /// Id of the appointment
-    /// </summary>
-    public Guid AppointmentId { get; init; }
 }
