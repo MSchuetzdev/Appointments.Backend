@@ -28,7 +28,8 @@ class Program
                 // Add SQL Server support to FluentMigrator
                 .AddPostgres()
                 // Set the connection string
-                .WithGlobalConnectionString("Server=.;Database=MyApp;Trusted_Connection=true;")
+                .WithGlobalConnectionString(
+                    "Host=localhost; Port=5432; Database=postgres; Username=user; Password=test")
                 // Define the assembly containing the migrations
                 .ScanIn(typeof(M001InitialMigration).Assembly).For.Migrations())
             // Enable logging to console in the FluentMigrator way
