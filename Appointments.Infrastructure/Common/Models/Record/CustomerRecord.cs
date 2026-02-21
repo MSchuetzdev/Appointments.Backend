@@ -10,20 +10,20 @@ public class CustomerRecord
     /// <summary>
     /// Firstname of the customer 
     /// </summary>
-    public string Firstname { get; set; } = "";
+    public string FirstName { get; set; } = "";
 
     /// <summary>
     /// Lastname of the customer
     /// </summary>
-    public string Lastname { get; set; } = "";
+    public string LastName { get; set; } = "";
 
     /// <summary>
     /// Id of the person 
     /// </summary>
-    public Guid PersonId { get; init; }
+    public Guid PersonId { get; set; }
 
     /// <summary>
     /// Id of the appointment
     /// </summary>
-    public Guid AppointmentId { get; init; }
+    public Guid AppointmentId { get; set; }
 }

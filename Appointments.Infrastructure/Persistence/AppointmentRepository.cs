@@ -16,18 +16,23 @@ public class AppointmentRepository(
     public async Task<Appointment> CreateAsync(CreateAppointmentCommand entity)
     {
         const string createQuery = """
-                                   INSERT INTO appointments a (name, start_time, end_time)
-                                   VALUES (:Name, :StartTime, :EndTime);
-                                   RETURNING id; 
-
-
-                                   INSERT INTO customers(person_id, appointment_id)
-                                   VALUES (:PersonId, a.id);
+                                   WITH new_appointment AS (
+                                       INSERT INTO appointments (name, start_time, end_time)
+                                       VALUES (:Name, :StartTime, :EndTime)
+                                       RETURNING id
+                                   ),
+                                   new_customer AS (
+                                       INSERT INTO customers (person_id, appointment_id)
+                                       SELECT :PersonId, id
+                                       FROM new_appointment
+                                   )
+                                   SELECT id
+                                   FROM new_appointment;
                                    """;
 
         using var connection = await sqlConnectionProvider.GetConnection("default");
 
-        var appointmentId = await connection.ExecuteScalarAsync<Guid>(createQuery, new
+        var appointmentId = await connection.QueryFirstOrDefaultAsync<Guid>(createQuery, new
         {
             entity.Name,
             entity.StartTime,
@@ -35,25 +40,28 @@ public class AppointmentRepository(
             entity.PersonId
         });
 
-        return await GetByIdAsync(appointmentId);
+        return await ReadByIdAsync(appointmentId);
     }
 
     public async Task<IEnumerable<Appointment>> GetAsync(string sqlFilter, object param)
     {
         const string baseQuery = """
                                  SELECT a.id,
+                                        a.name,
                                         a.start_time,
-                                        a.end_time,
-                                 FROM appointments 
-                                 WHERE id IN (SELECT id FROM TempAppointments)
+                                        a.end_time
+                                 FROM appointments a
+                                 WHERE id IN (SELECT id FROM TempAppointments);
 
                                  SELECT c.id,
-                                        c.firstname,
-                                        c.lastname,
-                                        c.person_id
-                                 FROM customers c 
-                                 INNER JOIN appointments a ON
-                                 c.appointment_id = a.appointment_id;
+                                        c.person_id,
+                                        c.appointment_id,
+                                        p.first_name , 
+                                        p.last_name,
+                                        p.email
+                                 FROM customers c
+                                 INNER JOIN persons p ON c.person_id = p.id
+                                 WHERE c.appointment_id IN (SELECT id FROM TempAppointments);
                                  """;
 
 
@@ -75,8 +83,8 @@ public class AppointmentRepository(
                     appointment.Customer = new Customer()
                     {
                         Id = customer.Id,
-                        Firstname = customer.Firstname,
-                        Lastname = customer.Lastname,
+                        Firstname = customer.FirstName,
+                        Lastname = customer.LastName,
                         PersonId = customer.PersonId,
                     };
                 }
@@ -86,14 +94,15 @@ public class AppointmentRepository(
         return appointments;
     }
 
-    public async Task<Appointment> GetByIdAsync(Guid id)
+    public async Task<Appointment> ReadByIdAsync(Guid id)
     {
         const string sqlFilter = """
-                                 CREATE TEMP TABLE TempAppointments (id GUID PRIMARY KEY);
+                                 CREATE TEMP TABLE TempAppointments (id uuid PRIMARY KEY);
 
                                  INSERT INTO TempAppointments (id)
+                                 SELECT id FROM appointments
                                  WHERE id = :Id; 
-                                 """; 
+                                 """;
 
         object param = new { Id = id };
 

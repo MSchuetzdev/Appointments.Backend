@@ -11,4 +11,6 @@ public interface IAppointmentRepository
     /// <param name="command"></param>
     /// <returns></returns>
     public Task<Appointment> CreateAsync(CreateAppointmentCommand command);
+    
+    public Task<Appointment> ReadByIdAsync(Guid id);
 }

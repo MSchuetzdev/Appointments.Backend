@@ -1,7 +1,5 @@
 using System.Data.Common;
-using System.Data.SqlClient;
 using Appointments.Infrastructure.Common.Interfaces;
-using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 
