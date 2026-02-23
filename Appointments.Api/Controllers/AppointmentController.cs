@@ -13,19 +13,21 @@ public class AppointmentController(IMediator mediator) : Controller
     /// </summary>
     /// <param name="command"></param>
     /// <returns></returns>
-    [HttpPost("/create")]
+    [HttpPost("create")]
     public async Task<IActionResult> CreateAppointment(CreateAppointmentCommand command)
     {
         var appointment = await mediator.Send(command);
         return Ok(appointment);
-    }    [HttpPost("/update")]
+    }
+
+    [HttpPost("update")]
     public async Task<IActionResult> UpdateAppointment(UpdateAppointmentCommand command)
     {
         var appointment = await mediator.Send(command);
         return Ok(appointment);
     }
 
-    [HttpPost("/cancel")]
+    [HttpPost("cancel")]
     public async Task<IActionResult> CancelAppointment(CancelAppointmentCommand command)
     {
         var appointment = await mediator.Send(command);
