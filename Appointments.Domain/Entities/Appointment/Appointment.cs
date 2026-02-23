@@ -1,26 +1,31 @@
 using Appointments.Domain.Common;
+using Appointments.Domain.Entities.Appointment.Interfaces;
 
 namespace Appointments.Domain.Entities.Appointment;
 
-public class Appointment: BaseEntity<Guid>
+public class Appointment : BaseEntity<Guid>, IAppointment
 {
-    /// <summary>
-    /// Name of the appointment
-    /// </summary>
-    public string Name { get; set; } = ""; 
-    
-    /// <summary>
-    /// Starttime of the appointment
-    /// </summary>
+    /// <inheritdoc/>>
+    public string Name { get; set; } = "";
+
+    /// <inheritdoc/>>
     public DateTime StartTime { get; set; }
 
-    /// <summary>
-    /// Endtime of the appointment
-    /// </summary>
+    /// <inheritdoc/>>
     public DateTime EndTime { get; set; }
 
-    /// <summary>
-    /// Customer where booked the appointment
-    /// </summary>
+    /// <inheritdoc/>>
     public Customer.Customer Customer { get; set; } = new Customer.Customer();
+
+    /// <inheritdoc/>>
+    public DateTime? DeletionTime { get; set; }
+
+    /// <summary>
+    /// Method to check if appointment is cancelled
+    /// </summary>
+    /// <returns></returns>
+    public bool IsAppointmentCancelled()
+    {
+        return DeletionTime != null;
+    }
 }

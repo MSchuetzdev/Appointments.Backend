@@ -1,4 +1,4 @@
-using Appointments.Application.Common.Interfaces.Repositories;
+using Appointments.Application.Common.Interfaces.Persistence;
 
 namespace Appointments.Tests.Repository;
 

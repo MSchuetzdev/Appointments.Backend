@@ -10,7 +10,7 @@ public interface ISqlConnectionProvider
     /// <summary>
     /// Creates a new connection to database
     /// </summary>
-    /// <param name="connectionString"></param>
+    /// <param name="connectionName"></param>
     /// <returns></returns>
-    Task<DbConnection> GetConnection(string connectionString); 
+    Task<DbConnection> GetConnection(string connectionName = "default"); 
 }

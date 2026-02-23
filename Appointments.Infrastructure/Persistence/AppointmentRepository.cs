@@ -1,5 +1,5 @@
-using Appointments.Application.Commands;
-using Appointments.Application.Common.Interfaces.Repositories;
+using Appointments.Application.Commands.Appointments;
+using Appointments.Application.Common.Interfaces.Persistence;
 using Appointments.Domain.Entities.Appointment;
 using Appointments.Domain.Entities.Customer;
 using Appointments.Infrastructure.Common.Interfaces;
@@ -11,8 +11,9 @@ namespace Appointments.Infrastructure.Persistence;
 public class AppointmentRepository(
     ISqlConnectionProvider sqlConnectionProvider
 )
-    : IAppointmentRepository, IReadRepository<Appointment>
+    : IAppointmentRepository
 {
+    /// <inheritdoc/>
     public async Task<Appointment> CreateAsync(CreateAppointmentCommand entity)
     {
         const string createQuery = """
@@ -43,13 +44,15 @@ public class AppointmentRepository(
         return await ReadByIdAsync(appointmentId);
     }
 
-    public async Task<IEnumerable<Appointment>> GetAsync(string sqlFilter, object param)
+    /// <inheritdoc/>
+    public async Task<IEnumerable<Appointment>> ReadAsync(string sqlFilter, object param)
     {
         const string baseQuery = """
                                  SELECT a.id,
                                         a.name,
                                         a.start_time,
-                                        a.end_time
+                                        a.end_time,
+                                        a.deletion_time
                                  FROM appointments a
                                  WHERE id IN (SELECT id FROM TempAppointments);
 
@@ -94,6 +97,7 @@ public class AppointmentRepository(
         return appointments;
     }
 
+    /// <inheritdoc/>
     public async Task<Appointment> ReadByIdAsync(Guid id)
     {
         const string sqlFilter = """
@@ -106,8 +110,57 @@ public class AppointmentRepository(
 
         object param = new { Id = id };
 
-        var res = (await GetAsync(sqlFilter, param)).FirstOrDefault();
+        var res = (await ReadAsync(sqlFilter, param)).FirstOrDefault();
 
         return res ?? new Appointment();
+    }
+
+    /// <inheritdoc/>
+    public async Task<Appointment> UpdateAsync(UpdateAppointmentCommand command)
+    {
+        const string updateQuery = """
+                                   UPDATE appointments
+                                   SET name =:Name,
+                                       start_time = :StartTime,
+                                       end_time = :EndTime
+                                   WHERE id =:appointmentId;
+
+                                   UPDATE customers
+                                   SET person_id = :CustomerPersonId
+                                   WHERE appointment_id = :AppointmentId
+                                   RETURNING appointment_id;
+                                   """;
+
+        using var connection = await sqlConnectionProvider.GetConnection("default");
+
+        var appointmentId = await connection.QueryFirstOrDefaultAsync<Guid>(updateQuery, new
+        {
+            command.Name,
+            command.StartTime,
+            command.EndTime,
+            command.CustomerPersonId,
+            AppointmentId = command.Id
+        });
+
+        return await ReadByIdAsync(appointmentId);
+    }
+
+    /// <inheritdoc/>
+    public async Task<Appointment> CancelAppointmentByIdAsync(Guid id)
+    {
+        const string cancelAppointmentQuery = """
+                                              UPDATE appointments 
+                                              SET deletion_time = :DeletionTime
+                                              WHERE id = :AppointmentId
+                                              RETURNING id; 
+                                              """;
+
+        using var connection = await sqlConnectionProvider.GetConnection();
+
+        object param = new { DeletionTime = DateTime.Now, AppointmentId = id };
+
+        var appointmentId = await connection.ExecuteScalarAsync<Guid>(cancelAppointmentQuery, param);
+
+        return await ReadByIdAsync(appointmentId);
     }
 }

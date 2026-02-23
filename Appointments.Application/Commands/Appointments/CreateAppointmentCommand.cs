@@ -1,8 +1,8 @@
-using Appointments.Application.Common.Interfaces.Repositories;
+using Appointments.Application.Common.Interfaces.Persistence;
 using Appointments.Domain.Entities.Appointment;
 using MediatR;
 
-namespace Appointments.Application.Commands;
+namespace Appointments.Application.Commands.Appointments;
 
 public class CreateAppointmentCommand : IRequest<Appointment>
 {

@@ -1,4 +1,4 @@
-using Appointments.Application.Common.Interfaces.Repositories;
+using Appointments.Application.Common.Interfaces.Persistence;
 using Appointments.Infrastructure.Common.Interfaces;
 using Appointments.Infrastructure.Persistence;
 using Microsoft.Extensions.Configuration;
