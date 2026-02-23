@@ -1,0 +1,20 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AChainedBuilderExtensions_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FLibrary_003FApplication_0020Support_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FSourcesCache_003F718f28f5c15aaf928428159f6d21873f83aadd692bcbfcd6b183e481be23eff_003FChainedBuilderExtensions_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AIConfiguration_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FLibrary_003FApplication_0020Support_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FSourcesCache_003F69d3bcd0b3e5da18e39772378ab375ab9b9a096326b784f2ee66beb7d83f5c1_003FIConfiguration_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AServiceProvider_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FLibrary_003FApplication_0020Support_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FSourcesCache_003Fdb31f833b312bc92fbd376adfd43aa89f9abb4df5193b7ac4e9f3a4d064b798_003FServiceProvider_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=00d1f7a0_002D2586_002D41b1_002D93e1_002D89a4065c7563/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetByIdAsync_ShouldGetAppointment" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::F7519037-F3A8-4805-95DC-6D94FDE06DDE::net10.0::Appointments.Tests.Repository.AppointmentRepositoryTests.GetByIdAsync_ShouldGetAppointment&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F7519037-F3A8-4805-95DC-6D94FDE06DDE::net10.0::Appointments.Tests.Commands.Appointment.AppointmentCommandTests.CreateAppointmentCommand_ShouldReturnCreatedAppointment&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F7519037-F3A8-4805-95DC-6D94FDE06DDE::net10.0::Appointments.Tests.Commands.Appointment.AppointmentCommandTests.UpdateAppointmentCommand_ShouldReturnUpdatedAppointment&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=34589466_002D2f3f_002D4e71_002D8296_002D1391edd76d10/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="CreateAppointmentCommand_ShouldReturnCreatedAppointment" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::F7519037-F3A8-4805-95DC-6D94FDE06DDE::net10.0::Appointments.Tests.Commands.Appointment.AppointmentCommandTests.CreateAppointmentCommand_ShouldReturnCreatedAppointment&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F7519037-F3A8-4805-95DC-6D94FDE06DDE::net10.0::Appointments.Tests.Commands.Appointment.AppointmentCommandTests.UpdateAppointmentCommand_ShouldReturnUpdatedAppointment&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F7519037-F3A8-4805-95DC-6D94FDE06DDE::net10.0::Appointments.Tests.Commands.Appointment.AppointmentCommandTests.CancelAppointmentCommand_ShouldIsCanceled&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F7519037-F3A8-4805-95DC-6D94FDE06DDE::net10.0::Appointments.Tests.Commands.Appointment.AppointmentCommandTests.CancelAppointmentCommand_ShouldIsAppointmentCancelled&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
