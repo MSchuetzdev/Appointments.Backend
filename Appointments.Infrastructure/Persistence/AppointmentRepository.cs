@@ -44,7 +44,12 @@ public class AppointmentRepository(
         return await ReadByIdAsync(appointmentId);
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Base method to read appointments
+    /// </summary>
+    /// <param name="sqlFilter"></param>
+    /// <param name="param"></param>
+    /// <returns></returns>
     public async Task<IEnumerable<Appointment>> ReadAsync(string sqlFilter, object param)
     {
         const string baseQuery = """
@@ -131,7 +136,7 @@ public class AppointmentRepository(
                                    RETURNING appointment_id;
                                    """;
 
-        using var connection = await sqlConnectionProvider.GetConnection("default");
+        using var connection = await sqlConnectionProvider.GetConnection();
 
         var appointmentId = await connection.QueryFirstOrDefaultAsync<Guid>(updateQuery, new
         {

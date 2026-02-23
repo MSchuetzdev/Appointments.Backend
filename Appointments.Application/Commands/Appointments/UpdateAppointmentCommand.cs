@@ -1,7 +1,6 @@
 using Appointments.Application.Common.Interfaces.Persistence;
 using Appointments.Domain.Entities.Appointment;
 using Appointments.Domain.Entities.Appointment.Interfaces;
-using Appointments.Domain.Entities.Customer;
 using MediatR;
 
 namespace Appointments.Application.Commands.Appointments;
