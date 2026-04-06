@@ -1,5 +1,6 @@
 using Appointments.Application.Common.Interfaces.Persistence;
 using Appointments.Domain.Entities.Appointment;
+using Appointments.Domain.Entities.Appointment.Interfaces;
 using MediatR;
 
 namespace Appointments.Application.Commands.Appointments;
@@ -39,9 +40,9 @@ public class CreateAppointmentCommand : IRequest<Appointment>
 public class CreateAppointmentCommandHandler(
     IAppointmentRepository appointmentRepository
 )
-    : IRequestHandler<CreateAppointmentCommand, Appointment>
+    : IRequestHandler<CreateAppointmentCommand, IAppointment>
 {
-    public async Task<Appointment> Handle(CreateAppointmentCommand request, CancellationToken cancellationToken)
+    public async Task<IAppointment> Handle(CreateAppointmentCommand request, CancellationToken cancellationToken)
     {
         if (!request.IsStartBeforeEndtime())
         {

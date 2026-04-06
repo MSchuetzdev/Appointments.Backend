@@ -10,41 +10,22 @@ public class M001InitialMigration : FluentMigrator.Migration
     {
         Execute.Sql("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";");
 
-        Create.Table("organizations")
-            .WithColumn("id").AsGuid().NotNullable().PrimaryKey().WithDefault(SystemMethods.NewGuid)
-            .WithColumn("name").AsString().NotNullable();
-
-        Create.Table("employees")
-            .WithColumn("id").AsGuid().NotNullable().PrimaryKey().WithDefault(SystemMethods.NewGuid)
-            .WithColumn("person_id").AsGuid().NotNullable().ForeignKey("persons", "id")
-            .OnDeleteOrUpdate(Rule.Cascade);
-
-        Create.Table("organization_employees")
-            .WithColumn("id").AsGuid().NotNullable().PrimaryKey().WithDefault(SystemMethods.NewGuid)
-            .WithColumn("organization_id").AsGuid().NotNullable().ForeignKey("organizations", "id")
-            .OnDeleteOrUpdate(Rule.Cascade)
-            .WithColumn("employee_id").AsGuid().NotNullable().ForeignKey("employees", "id")
-            .OnDeleteOrUpdate(Rule.Cascade);
-
         Create.Table("appointments")
             .WithColumn("id").AsGuid().NotNullable().PrimaryKey().WithDefault(SystemMethods.NewGuid)
-            .WithColumn("name").AsGuid().NotNullable()
+            .WithColumn("name").AsString().NotNullable()
             .WithColumn("start_time").AsDateTime().NotNullable()
             .WithColumn("end_time").AsDateTime().NotNullable()
             .WithColumn("deletion_time").AsDateTime().Nullable();
 
         Create.Table("customers")
             .WithColumn("id").AsGuid().NotNullable().PrimaryKey().WithDefault(SystemMethods.NewGuid)
-            .WithColumn("person_id").AsGuid().NotNullable().ForeignKey("persons", "id")
-            .OnDeleteOrUpdate(Rule.Cascade)
-            .WithColumn("appointment_id").AsGuid().NotNullable().ForeignKey("appointments", "id")
-            .OnDeleteOrUpdate(Rule.Cascade);
+            .WithColumn("person_id").AsGuid().NotNullable()
+            .WithColumn("appointment_id").AsGuid().NotNullable().ForeignKey("appointments", "id");
 
-        Create.Table("appointment_employees")
+        Create.Table("appointment_customers")
             .WithColumn("id").AsGuid().NotNullable().PrimaryKey().WithDefault(SystemMethods.NewGuid)
+            .WithColumn("person_id").AsGuid().NotNullable()
             .WithColumn("appointment_id").AsGuid().NotNullable().ForeignKey("appointments", "id")
-            .OnDelete(Rule.Cascade)
-            .WithColumn("employee_id").AsGuid().NotNullable().ForeignKey("employees", "id")
             .OnDeleteOrUpdate(Rule.Cascade);
 
         Create.Table("kinds")

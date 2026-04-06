@@ -1,5 +1,5 @@
 using Appointments.Application.Commands.Appointments;
-using Appointments.Domain.Entities.Appointment;
+using Appointments.Domain.Entities.Appointment.Interfaces;
 
 namespace Appointments.Application.Common.Interfaces.Persistence;
 
@@ -13,26 +13,26 @@ public interface IAppointmentRepository
     /// </summary>
     /// <param name="command"></param>
     /// <returns></returns>
-    public Task<Appointment> CreateAsync(CreateAppointmentCommand command);
+    public Task<IAppointment> CreateAsync(CreateAppointmentCommand command);
 
     /// <summary>
     /// Gets an appointment by id 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public Task<Appointment> ReadByIdAsync(Guid id);
+    public Task<IAppointment> ReadByIdAsync(Guid id);
 
     /// <summary>
     /// Updates an appointment
     /// </summary>
     /// <param name="command"></param>
     /// <returns></returns>
-    public Task<Appointment> UpdateAsync(UpdateAppointmentCommand command);
+    public Task<IAppointment> UpdateAsync(UpdateAppointmentCommand command);
 
     /// <summary>
     /// Cancel an single appointment by its id
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public Task<Appointment> CancelAppointmentByIdAsync(Guid id);
+    public Task<IAppointment> CancelAppointmentByIdAsync(Guid id);
 }

@@ -9,8 +9,8 @@ public class AppointmentCommandTests
     {
         var command = new CreateAppointmentCommand()
         {
-            Name = "Test-Termin",
-            PersonId = Guid.Parse("d0af0d5f-78b8-42ec-a540-ccab06591f22"),
+            Name = "Zahnpflege-Termin",
+            PersonId = Guid.Parse("b837a339-eea1-4686-9279-b81f36083f5d"),
             StartTime = DateTime.Now.AddHours(3),
             EndTime = DateTime.Now.AddDays(3).AddHours(2),
         };
@@ -18,7 +18,7 @@ public class AppointmentCommandTests
         var result = await new ApplicationFactory()
             .Send(command);
 
-        Assert.Matches("Test-Termin", result.Name);
+        Assert.Matches("Zahnpflege-Termin", result.Name);
     }
 
     [Fact]
@@ -44,7 +44,7 @@ public class AppointmentCommandTests
     {
         var command = new CancelAppointmentCommand()
         {
-            AppointmentId = Guid.Parse("9e239410-148e-4253-8509-9ef2bd650630")
+            AppointmentId = Guid.Parse("e2afc211-f5e0-4143-80ec-faf5ab1c251d")
         };
 
         var result = await new ApplicationFactory()

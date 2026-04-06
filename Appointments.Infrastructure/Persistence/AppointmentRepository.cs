@@ -1,44 +1,37 @@
 using Appointments.Application.Commands.Appointments;
 using Appointments.Application.Common.Interfaces.Persistence;
 using Appointments.Domain.Entities.Appointment;
-using Appointments.Domain.Entities.Customer;
+using Appointments.Domain.Entities.Appointment.Interfaces;
+using Appointments.Domain.Options;
 using Appointments.Infrastructure.Common.Interfaces;
 using Appointments.Infrastructure.Common.Models.Record;
 using Dapper;
+using Microsoft.Extensions.Options;
 
 namespace Appointments.Infrastructure.Persistence;
 
 public class AppointmentRepository(
-    ISqlConnectionProvider sqlConnectionProvider
+    ISqlConnectionProvider sqlConnectionProvider,
+    IOptions<ApiUrls> options
 )
     : IAppointmentRepository
 {
     /// <inheritdoc/>
-    public async Task<Appointment> CreateAsync(CreateAppointmentCommand entity)
+    public async Task<IAppointment> CreateAsync(CreateAppointmentCommand entity)
     {
         const string createQuery = """
-                                   WITH new_appointment AS (
                                        INSERT INTO appointments (name, start_time, end_time)
                                        VALUES (:Name, :StartTime, :EndTime)
-                                       RETURNING id
-                                   ),
-                                   new_customer AS (
-                                       INSERT INTO customers (person_id, appointment_id)
-                                       SELECT :PersonId, id
-                                       FROM new_appointment
-                                   )
-                                   SELECT id
-                                   FROM new_appointment;
+                                       RETURNING id; 
                                    """;
 
-        using var connection = await sqlConnectionProvider.GetConnection("default");
+        using var connection = await sqlConnectionProvider.GetConnection();
 
         var appointmentId = await connection.QueryFirstOrDefaultAsync<Guid>(createQuery, new
         {
             entity.Name,
             entity.StartTime,
             entity.EndTime,
-            entity.PersonId
         });
 
         return await ReadByIdAsync(appointmentId);
@@ -50,7 +43,7 @@ public class AppointmentRepository(
     /// <param name="sqlFilter"></param>
     /// <param name="param"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Appointment>> ReadAsync(string sqlFilter, object param)
+    public async Task<IEnumerable<IAppointment>> ReadAsync(string sqlFilter, object param)
     {
         const string baseQuery = """
                                  SELECT a.id,
@@ -59,51 +52,44 @@ public class AppointmentRepository(
                                         a.end_time,
                                         a.deletion_time
                                  FROM appointments a
-                                 WHERE id IN (SELECT id FROM TempAppointments);
-
-                                 SELECT c.id,
-                                        c.person_id,
-                                        c.appointment_id,
-                                        p.first_name , 
-                                        p.last_name,
-                                        p.email
-                                 FROM customers c
-                                 INNER JOIN persons p ON c.person_id = p.id
-                                 WHERE c.appointment_id IN (SELECT id FROM TempAppointments);
+                                 WHERE a.id IN (SELECT id FROM TempAppointments);
                                  """;
 
+        var appointmentResult = new List<IAppointment>();
 
         using var connection = await sqlConnectionProvider.GetConnection("default");
 
         await using var reader = await connection.QueryMultipleAsync(sqlFilter + baseQuery, param);
 
-        var appointments = (await reader.ReadAsync<Appointment>()).ToList();
+        var appointmentRecords = (await reader.ReadAsync<AppointmentRecord>()).ToList();
 
-        var customers = (await reader.ReadAsync<CustomerRecord>()).GroupBy(recorder => recorder.AppointmentId)
-            .ToDictionary(elem => elem.Key, elem => elem.ToList());
+        var customerPersonIds = appointmentRecords.Select(x => x.PersonId);
 
-        foreach (var appointment in appointments)
+        var requestParameter = string.Join("&", customerPersonIds.Select(id => $"personIds={id}"));
+
+        /*var persons = await client.GetFromJsonAsync<IEnumerable<Person>>(
+            $"{options.Value.IdentityBackendUrl}/persons?{requestParameter}");*/
+
+        /*var personsById = persons.ToDictionary(x => x.Id);*/
+
+        foreach (var appointmentsRecord in appointmentRecords)
         {
-            if (customers.ContainsKey(appointment.Id))
+            var appointment = new Appointment()
             {
-                foreach (var customer in customers[appointment.Id])
-                {
-                    appointment.Customer = new Customer()
-                    {
-                        Id = customer.Id,
-                        Firstname = customer.FirstName,
-                        Lastname = customer.LastName,
-                        PersonId = customer.PersonId,
-                    };
-                }
-            }
+                Id = appointmentsRecord.Id,
+                Name = appointmentsRecord.Name,
+                StartTime = appointmentsRecord.StartTime,
+                EndTime = appointmentsRecord.EndTime,
+            };
+
+            appointmentResult.Add(appointment);
         }
 
-        return appointments;
+        return appointmentResult;
     }
 
     /// <inheritdoc/>
-    public async Task<Appointment> ReadByIdAsync(Guid id)
+    public async Task<IAppointment> ReadByIdAsync(Guid id)
     {
         const string sqlFilter = """
                                  CREATE TEMP TABLE TempAppointments (id uuid PRIMARY KEY);
@@ -121,7 +107,7 @@ public class AppointmentRepository(
     }
 
     /// <inheritdoc/>
-    public async Task<Appointment> UpdateAsync(UpdateAppointmentCommand command)
+    public async Task<IAppointment> UpdateAsync(UpdateAppointmentCommand command)
     {
         const string updateQuery = """
                                    UPDATE appointments
@@ -151,7 +137,7 @@ public class AppointmentRepository(
     }
 
     /// <inheritdoc/>
-    public async Task<Appointment> CancelAppointmentByIdAsync(Guid id)
+    public async Task<IAppointment> CancelAppointmentByIdAsync(Guid id)
     {
         const string cancelAppointmentQuery = """
                                               UPDATE appointments 

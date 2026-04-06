@@ -8,7 +8,7 @@ public class Person
     /// <summary>
     /// Id of the person
     /// </summary>
-    public required Guid PersonId { get; init; }
+    public required Guid Id { get; init; }
 
     /// <summary>
     /// Firstname of the person
@@ -19,4 +19,14 @@ public class Person
     /// Lastname of the person
     /// </summary>
     public string Lastname { get; set; } = "";
+    
+    /// <summary>
+    /// Email of the person
+    /// </summary>
+    public string Email { get; set; } = "";
+    
+    /// <summary>
+    /// Phonenumber of the person
+    /// </summary>
+    public string PhoneNumber { get; set; } = "";
 }

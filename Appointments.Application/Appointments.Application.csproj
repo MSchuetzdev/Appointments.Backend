@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <PackageReference Include="MediatR" Version="14.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Options" Version="11.0.0-preview.2.26159.112" />
     </ItemGroup>
 
     <ItemGroup>

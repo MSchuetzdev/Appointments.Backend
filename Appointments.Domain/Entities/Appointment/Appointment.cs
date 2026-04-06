@@ -13,19 +13,12 @@ public class Appointment : BaseEntity<Guid>, IAppointment
 
     /// <inheritdoc/>>
     public DateTime EndTime { get; set; }
-
+        
+    /*
     /// <inheritdoc/>>
-    public Customer.Customer Customer { get; set; } = new Customer.Customer();
+    public Customer.Customer? Customer { get; set; }
+    */
 
     /// <inheritdoc/>>
     public DateTime? DeletionTime { get; set; }
-
-    /// <summary>
-    /// Method to check if appointment is cancelled
-    /// </summary>
-    /// <returns></returns>
-    public bool IsAppointmentCancelled()
-    {
-        return DeletionTime != null;
-    }
 }

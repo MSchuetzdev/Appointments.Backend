@@ -21,6 +21,9 @@ class Program
     /// </summary>
     private static ServiceProvider CreateServices()
     {
+
+        var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING"); 
+        
         return new ServiceCollection()
             // Add common FluentMigrator services
             .AddFluentMigratorCore()
@@ -28,8 +31,7 @@ class Program
                 // Add SQL Server support to FluentMigrator
                 .AddPostgres()
                 // Set the connection string
-                .WithGlobalConnectionString(
-                    "Host=localhost; Port=5432; Database=postgres; Username=user; Password=test")
+                .WithGlobalConnectionString(connectionString)
                 // Define the assembly containing the migrations
                 .ScanIn(typeof(M001InitialMigration).Assembly).For.Migrations())
             // Enable logging to console in the FluentMigrator way

@@ -39,9 +39,9 @@ public class UpdateAppointmentCommand : IRequest<Appointment>, IUpdateAppointmen
 public class UpdateAppointmentCommandHandler(
     IAppointmentRepository appointmentRepository
 )
-    : IRequestHandler<UpdateAppointmentCommand, Appointment>
+    : IRequestHandler<UpdateAppointmentCommand, IAppointment>
 {
-    public async Task<Appointment> Handle(UpdateAppointmentCommand request, CancellationToken cancellationToken)
+    public async Task<IAppointment> Handle(UpdateAppointmentCommand request, CancellationToken cancellationToken)
     {
         return await appointmentRepository.UpdateAsync(request);
     }

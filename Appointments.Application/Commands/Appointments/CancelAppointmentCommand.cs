@@ -1,5 +1,5 @@
 using Appointments.Application.Common.Interfaces.Persistence;
-using Appointments.Domain.Entities.Appointment;
+using Appointments.Domain.Entities.Appointment.Interfaces;
 using MediatR;
 
 namespace Appointments.Application.Commands.Appointments;
@@ -7,7 +7,7 @@ namespace Appointments.Application.Commands.Appointments;
 /// <summary>
 /// Command for cancel an appointment
 /// </summary>
-public class CancelAppointmentCommand : IRequest<Appointment>
+public class CancelAppointmentCommand : IRequest<IAppointment>
 {
     /// <summary>
     /// Id of the appointment that should be cancelled
@@ -17,9 +17,9 @@ public class CancelAppointmentCommand : IRequest<Appointment>
 
 public class CancelAppointmentCommandHandler(
     IAppointmentRepository appointmentRepository
-) : IRequestHandler<CancelAppointmentCommand, Appointment>
+) : IRequestHandler<CancelAppointmentCommand, IAppointment>
 {
-    public async Task<Appointment> Handle(CancelAppointmentCommand request, CancellationToken cancellationToken)
+    public async Task<IAppointment> Handle(CancelAppointmentCommand request, CancellationToken cancellationToken)
     {
         var appointment = await appointmentRepository.CancelAppointmentByIdAsync(request.AppointmentId);
 

@@ -1,4 +1,5 @@
 using Appointments.Application;
+using Appointments.Domain.Options;
 using Appointments.Infrastructure;
 using Microsoft.OpenApi;
 
@@ -27,9 +28,12 @@ public class Startup
         services.AddApplication();
         services.AddInfrastructure(Configuration);
 
+        // Add options
+        services.Configure<ApiUrls>(Configuration.GetSection("ApiUrls"));
+
         // Add controllers
         services.AddControllers();
-        
+
         // Configure Cors settings
         services.AddCors(x =>
         {
@@ -42,7 +46,14 @@ public class Startup
             });
         });
 
-        services.AddMediatR(cfg => { cfg.RegisterServicesFromAssembly(typeof(Startup).Assembly); });
+
+        var medaitrLicenseKey = Environment.GetEnvironmentVariable("MEDIATR_LICENSE_KEY");
+
+        services.AddMediatR(cfg =>
+        {
+            cfg.LicenseKey = medaitrLicenseKey;
+            cfg.RegisterServicesFromAssembly(typeof(Startup).Assembly);
+        });
 
 
         // Configure Swagger settings
