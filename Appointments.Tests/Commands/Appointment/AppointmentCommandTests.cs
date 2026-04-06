@@ -9,8 +9,7 @@ public class AppointmentCommandTests
     {
         var command = new CreateAppointmentCommand()
         {
-            Name = "Zahnpflege-Termin",
-            PersonId = Guid.Parse("b837a339-eea1-4686-9279-b81f36083f5d"),
+            Name = "Auto-Aufbereitung (Standard)",
             StartTime = DateTime.Now.AddHours(3),
             EndTime = DateTime.Now.AddDays(3).AddHours(2),
         };
@@ -18,7 +17,7 @@ public class AppointmentCommandTests
         var result = await new ApplicationFactory()
             .Send(command);
 
-        Assert.Matches("Zahnpflege-Termin", result.Name);
+        Assert.Matches("Auto-Aufbereitung (Standard)", result.Name);
     }
 
     [Fact]

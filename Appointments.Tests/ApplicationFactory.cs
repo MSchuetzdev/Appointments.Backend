@@ -23,6 +23,8 @@ public class ApplicationFactory : IDisposable
         // Instruct dapper to map camel_case field from database to PascalCase: first_name => FirstName to improve database results in test-environment 
         DefaultTypeMap.MatchNamesWithUnderscores = true;
 
+        // Inject mediatrLicenseKey to register mediatr for applicationfactory
+        var medaitrLicenseKey = Environment.GetEnvironmentVariable("MEDIATR_LICENSE_KEY");
         Factory = new WebApplicationFactory<Program>()
             .WithWebHostBuilder(builder =>
             {
@@ -35,6 +37,11 @@ public class ApplicationFactory : IDisposable
                 {
                     services.AddTransient<FakeRemoteIpAddressMiddleware>();
                     services.AddSingleton<IStartupFilter, StartupFilter>();
+                    services.AddMediatR(cfg =>
+                    {
+                        cfg.LicenseKey = medaitrLicenseKey;
+                        cfg.RegisterServicesFromAssembly(typeof(Startup).Assembly);
+                    });
                 });
             });
     }

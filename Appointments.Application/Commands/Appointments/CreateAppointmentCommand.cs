@@ -1,11 +1,10 @@
 using Appointments.Application.Common.Interfaces.Persistence;
-using Appointments.Domain.Entities.Appointment;
 using Appointments.Domain.Entities.Appointment.Interfaces;
 using MediatR;
 
 namespace Appointments.Application.Commands.Appointments;
 
-public class CreateAppointmentCommand : IRequest<Appointment>
+public class CreateAppointmentCommand : IRequest<IAppointment>
 {
     /// <summary>
     /// Name of the appointment that will be created 
@@ -22,11 +21,6 @@ public class CreateAppointmentCommand : IRequest<Appointment>
     /// </summary>
     public DateTime EndTime { get; set; }
 
-    /// <summary>
-    /// Id of the person 
-    /// </summary>
-    public Guid PersonId { get; set; }
-    
     /// <summary>
     /// Check start is before end
     /// </summary>
