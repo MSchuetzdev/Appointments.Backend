@@ -1,4 +1,5 @@
 using Appointments.Application.Commands.Appointments;
+using Appointments.Domain.Entities.Appointment;
 using Appointments.Domain.Entities.Appointment.Interfaces;
 
 namespace Appointments.Application.Common.Interfaces.Persistence;
@@ -35,4 +36,11 @@ public interface IAppointmentRepository
     /// <param name="id"></param>
     /// <returns></returns>
     public Task<IAppointment> CancelAppointmentByIdAsync(Guid id);
+
+    /// <summary>
+    /// Select appointments by a list of appointmentIds
+    /// </summary>
+    /// <param name="ids"></param>
+    /// <returns></returns>
+    public Task<IEnumerable<Appointment>> ReadByIdsAsync(List<Guid> ids);
 }

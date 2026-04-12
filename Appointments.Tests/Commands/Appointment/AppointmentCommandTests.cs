@@ -1,4 +1,5 @@
 using Appointments.Application.Commands.Appointments;
+using Appointments.Domain.Entities.Appointment;
 
 namespace Appointments.Tests.Commands.Appointment;
 
@@ -50,5 +51,20 @@ public class AppointmentCommandTests
             .Send(command);
 
         Assert.True(result.IsAppointmentCancelled());
+    }
+
+
+    [Fact]
+    public async Task CreateAppointmentBookingCommand_ShouldReturnAppointmentBooking()
+    {
+        var command = new BookAppointmentCommand()
+        {
+            AppointmentId = Guid.Parse(""),
+            PersonId = Guid.Parse("")
+        };
+        var result = await new ApplicationFactory().Send(command);
+
+
+        Assert.IsType<BookedAppointment>(result);
     }
 }

@@ -43,4 +43,22 @@ public class AppointmentController(IMediator mediator) : Controller
         var appointment = await mediator.Send(command);
         return Ok(appointment);
     }
+
+    /// <summary>
+    /// Book an appointment
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    [HttpPost("book")]
+    public async Task<IActionResult> BookAppointment(BookAppointmentCommand command)
+    {
+        var appointment = await mediator.Send(command);
+
+        if (appointment == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(appointment);
+    }
 }

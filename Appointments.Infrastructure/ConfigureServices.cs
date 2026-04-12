@@ -10,7 +10,8 @@ public static class ConfigureServices
 {
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddSingleton<IAppointmentRepository, AppointmentRepository>(); 
+        services.AddSingleton<IAppointmentRepository, AppointmentRepository>();
+        services.AddSingleton<IBookedAppointmentRepository, BookedAppointmentRepository>(); 
         services.AddSingleton<ISqlConnectionProvider, SqlConnectionProvider>();
     }
 }

@@ -22,18 +22,15 @@ public interface IAppointment
     /// </summary>
     public DateTime EndTime { get; set; }
 
-    /*
-    /// <summary>
-    /// Customer where booked the appointment
-    /// </summary>
-    public Customer.Customer Customer { get; set; }
-    */
-
     /// <summary>
     /// Time when the appointment is cancelled
     /// </summary>
     public DateTime? DeletionTime { get; set; }
 
+    /// <summary>
+    /// Method to validate if appointment is cancelled
+    /// </summary>
+    /// <returns></returns>
     public bool IsAppointmentCancelled()
     {
         return DeletionTime != null; 

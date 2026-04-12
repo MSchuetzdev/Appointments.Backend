@@ -5,7 +5,7 @@ namespace Appointments.Domain.Entities.Customer;
 /// <summary>
 /// Represents a customer
 /// </summary>
-public class Customer: BaseEntity<Guid>
+public class Customer
 {
     /// <summary>
     /// Firstname of the customer 

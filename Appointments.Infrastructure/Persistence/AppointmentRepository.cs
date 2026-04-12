@@ -12,10 +12,13 @@ namespace Appointments.Infrastructure.Persistence;
 
 public class AppointmentRepository(
     ISqlConnectionProvider sqlConnectionProvider,
-    IOptions<ApiUrls> options
+    IOptions<ApiUrls> options,
+    IBookedAppointmentRepository bookedAppointmentRepository
 )
     : IAppointmentRepository
 {
+    private readonly HttpClient _client = new HttpClient();
+
     /// <inheritdoc/>
     public async Task<IAppointment> CreateAsync(CreateAppointmentCommand entity)
     {
@@ -67,8 +70,6 @@ public class AppointmentRepository(
 
         var requestParameter = string.Join("&", customerPersonIds.Select(id => $"personIds={id}"));
 
-        /*var persons = await client.GetFromJsonAsync<IEnumerable<Person>>(
-            $"{options.Value.IdentityBackendUrl}/persons?{requestParameter}");*/
 
         /*var personsById = persons.ToDictionary(x => x.Id);*/
 
@@ -153,5 +154,11 @@ public class AppointmentRepository(
         var appointmentId = await connection.ExecuteScalarAsync<Guid>(cancelAppointmentQuery, param);
 
         return await ReadByIdAsync(appointmentId);
+    }
+
+
+    public Task<IEnumerable<Appointment>> ReadByIdsAsync(List<Guid> ids)
+    {
+        throw new NotImplementedException();
     }
 }

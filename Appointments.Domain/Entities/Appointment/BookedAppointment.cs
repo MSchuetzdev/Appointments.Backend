@@ -19,9 +19,9 @@ public class BookedAppointment : BaseEntity<Guid>, IAppointment
 
     /// <inheritdoc/>
     public DateTime? DeletionTime { get; set; }
-
+    
     /// <summary>
     /// Customer of the booked appointment
     /// </summary>
-    public Customer.Customer Customer { get; init; } = new Customer.Customer();
+    public List<Customer.Customer> Customer { get; init; } = new List<Customer.Customer>();
 }
