@@ -29,14 +29,7 @@ public interface IAppointmentRepository
     /// <param name="command"></param>
     /// <returns></returns>
     public Task<IAppointment> UpdateAsync(UpdateAppointmentCommand command);
-
-    /// <summary>
-    /// Cancel an single appointment by its id
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public Task<IAppointment> CancelAppointmentByIdAsync(Guid id);
-
+    
     /// <summary>
     /// Select appointments by a list of appointmentIds
     /// </summary>

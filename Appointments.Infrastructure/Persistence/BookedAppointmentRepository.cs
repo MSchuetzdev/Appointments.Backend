@@ -84,7 +84,6 @@ public class BookedAppointmentRepository(
         return bookedAppointments;
     }
 
-
     /// <inheritdoc/>>
     public async Task<BookedAppointment> BookAppointmentAsync(BookAppointmentCommand command)
     {
@@ -129,6 +128,21 @@ public class BookedAppointmentRepository(
         };
 
         return (await ReadAsync(sqlFilter, param)).First();
+    }
+
+    public async Task CancelBookedAppointmentAsync(Guid appointmentId)
+    {
+        const string query = """
+                             UPDATE appointment_bookings 
+                             SET cancellation_time = :CancellationTime
+                             WHERE appointment_id = :AppointmentId;
+                             """;
+
+        await using var connection = await sqlConnectionProvider.GetConnection();
+
+        object param = new { CancellationTime = DateTime.Now, AppointmentId = appointmentId };
+
+        await connection.ExecuteAsync(query, param);
     }
 
     public Task<BookedAppointment> ReadByIdAsync(Guid appointmentId)

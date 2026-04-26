@@ -2,13 +2,13 @@ using System.Net;
 using System.Net.Http.Headers;
 using Appointments.Api;
 using Dapper;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using TimeWarp.Mediator;
 
 namespace Appointments.Tests;
 
@@ -37,11 +37,7 @@ public class ApplicationFactory : IDisposable
                 {
                     services.AddTransient<FakeRemoteIpAddressMiddleware>();
                     services.AddSingleton<IStartupFilter, StartupFilter>();
-                    services.AddMediatR(cfg =>
-                    {
-                        cfg.LicenseKey = medaitrLicenseKey;
-                        cfg.RegisterServicesFromAssembly(typeof(Startup).Assembly);
-                    });
+                    services.AddMediator(cfg => { cfg.RegisterServicesFromAssembly(typeof(Startup).Assembly); });
                 });
             });
     }
@@ -71,10 +67,10 @@ public class ApplicationFactory : IDisposable
         return GetScopedService<IMediator>().Send(request: request, cancellationToken: cancellationToken);
     }
 
-    /*public Task Send<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : notnull
+    /* public Task Send<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : notnull
     {
         return GetScopedService<IMediator>().Send(request: request, cancellationToken: cancellationToken);
-    }*/
+    } */
 
 
     public HttpClient CreateClientWithAuth()

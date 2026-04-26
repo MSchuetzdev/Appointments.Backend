@@ -21,6 +21,13 @@
     &lt;TestId&gt;xUnit::F7519037-F3A8-4805-95DC-6D94FDE06DDE::net10.0::Appointments.Tests.Repository.AppointmentRepositoryTests.GetByIdAsync_ShouldGetAppointment&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2be6eef8_002Df7bb_002D45fc_002D9281_002D27a221783178/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="CancelBookingCommand_ValidScenario_ShouldReturnTrue" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::F7519037-F3A8-4805-95DC-6D94FDE06DDE::net10.0::Appointments.Tests.Commands.Appointment.AppointmentCommandTests.CancelBookingCommand_ValidScenario_ShouldReturnTrue&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F7519037-F3A8-4805-95DC-6D94FDE06DDE::net10.0::Appointments.Tests.Commands.Appointment.AppointmentCommandTests.CancelBookingCommand_NonExistentBooking_ShouldThrowException&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F7519037-F3A8-4805-95DC-6D94FDE06DDE::net10.0::Appointments.Tests.Commands.Appointment.AppointmentCommandTests.BookAppointmentCommand_DuplicateBooking_ShouldThrowException&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=34589466_002D2f3f_002D4e71_002D8296_002D1391edd76d10/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreateAppointmentCommand_ShouldReturnCreatedAppointment" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::F7519037-F3A8-4805-95DC-6D94FDE06DDE::net10.0::Appointments.Tests.Commands.Appointment.AppointmentCommandTests.CreateAppointmentCommand_ShouldReturnCreatedAppointment&lt;/TestId&gt;
@@ -34,12 +41,12 @@
     &lt;TestId&gt;xUnit::F7519037-F3A8-4805-95DC-6D94FDE06DDE::net10.0::Appointments.Tests.Repository.AppointmentRepositoryTests.GetByIdAsync_ShouldGetAppointment&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=50784324_002D01f8_002D4ba7_002D9d97_002D39c7ba9ba56d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="CreateAppointmentCommand_ShouldReturnCreatedAppointment" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=50784324_002D01f8_002D4ba7_002D9d97_002D39c7ba9ba56d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreateAppointmentCommand_ShouldReturnCreatedAppointment" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::F7519037-F3A8-4805-95DC-6D94FDE06DDE::net10.0::Appointments.Tests.Commands.Appointment.AppointmentCommandTests.CreateAppointmentCommand_ShouldReturnCreatedAppointment&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c2cf8ffd_002D4ba8_002D4f6d_002D8d4b_002Db27f474d2265/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetByIdAsync_ShouldGetAppointment" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c2cf8ffd_002D4ba8_002D4f6d_002D8d4b_002Db27f474d2265/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetByIdAsync_ShouldGetAppointment" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::F7519037-F3A8-4805-95DC-6D94FDE06DDE::net10.0::Appointments.Tests.Repository.AppointmentRepositoryTests.GetByIdAsync_ShouldGetAppointment&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::F7519037-F3A8-4805-95DC-6D94FDE06DDE::net10.0::Appointments.Tests.Commands.Appointment.AppointmentCommandTests.CreateAppointmentCommand_ShouldReturnCreatedAppointment&lt;/TestId&gt;

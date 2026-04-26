@@ -21,7 +21,6 @@ class Program
     /// </summary>
     private static ServiceProvider CreateServices()
     {
-
         var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING"); 
         
         return new ServiceCollection()

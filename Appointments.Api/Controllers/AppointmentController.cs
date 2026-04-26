@@ -1,6 +1,7 @@
 using Appointments.Application.Commands.Appointments;
-using MediatR;
+using Appointments.Application.Commands.BookedAppointments;
 using Microsoft.AspNetCore.Mvc;
+using TimeWarp.Mediator;
 
 namespace Appointments.Api.Controllers;
 
@@ -38,10 +39,10 @@ public class AppointmentController(IMediator mediator) : Controller
     /// <param name="command"></param>
     /// <returns></returns>
     [HttpPost("cancel")]
-    public async Task<IActionResult> CancelAppointment(CancelAppointmentCommand command)
+    public async Task<IActionResult> CancelAppointment(CancelBookedAppointmentCommand command)
     {
-        var appointment = await mediator.Send(command);
-        return Ok(appointment);
+        await mediator.Send(command);
+        return NoContent();
     }
 
     /// <summary>
@@ -53,12 +54,7 @@ public class AppointmentController(IMediator mediator) : Controller
     public async Task<IActionResult> BookAppointment(BookAppointmentCommand command)
     {
         var appointment = await mediator.Send(command);
-
-        if (appointment == null)
-        {
-            return NotFound();
-        }
-
+        
         return Ok(appointment);
     }
 }

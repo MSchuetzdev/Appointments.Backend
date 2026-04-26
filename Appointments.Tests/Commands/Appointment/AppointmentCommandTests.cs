@@ -40,21 +40,6 @@ public class AppointmentCommandTests
     }
 
     [Fact]
-    public async Task CancelAppointmentCommand_ShouldIsAppointmentCancelled()
-    {
-        var command = new CancelAppointmentCommand()
-        {
-            AppointmentId = Guid.Parse("e2afc211-f5e0-4143-80ec-faf5ab1c251d")
-        };
-
-        var result = await new ApplicationFactory()
-            .Send(command);
-
-        Assert.True(result.IsAppointmentCancelled());
-    }
-
-
-    [Fact]
     public async Task CreateAppointmentBookingCommand_ShouldReturnAppointmentBooking()
     {
         var command = new BookAppointmentCommand()

@@ -49,13 +49,12 @@ public class Startup
 
         var medaitrLicenseKey = Environment.GetEnvironmentVariable("MEDIATR_LICENSE_KEY");
 
-        services.AddMediatR(cfg =>
+
+        services.AddMediator(cfg =>
         {
-            cfg.LicenseKey = medaitrLicenseKey;
-            cfg.RegisterServicesFromAssembly(typeof(Startup).Assembly);
+            cfg.RegisterServicesFromAssemblyContaining<Startup>(); 
         });
-
-
+        
         // Configure Swagger settings
         services.AddSwaggerGen(c =>
         {

@@ -136,27 +136,7 @@ public class AppointmentRepository(
 
         return await ReadByIdAsync(appointmentId);
     }
-
-    /// <inheritdoc/>
-    public async Task<IAppointment> CancelAppointmentByIdAsync(Guid id)
-    {
-        const string cancelAppointmentQuery = """
-                                              UPDATE appointments 
-                                              SET deletion_time = :DeletionTime
-                                              WHERE id = :AppointmentId
-                                              RETURNING id; 
-                                              """;
-
-        using var connection = await sqlConnectionProvider.GetConnection();
-
-        object param = new { DeletionTime = DateTime.Now, AppointmentId = id };
-
-        var appointmentId = await connection.ExecuteScalarAsync<Guid>(cancelAppointmentQuery, param);
-
-        return await ReadByIdAsync(appointmentId);
-    }
-
-
+    
     public Task<IEnumerable<Appointment>> ReadByIdsAsync(List<Guid> ids)
     {
         throw new NotImplementedException();

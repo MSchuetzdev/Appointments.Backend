@@ -38,6 +38,13 @@ public class M001InitialMigration : FluentMigrator.Migration
             .OnDeleteOrUpdate(Rule.Cascade)
             .WithColumn("kind_id").AsGuid().NotNullable().ForeignKey("kinds", "id")
             .OnDeleteOrUpdate(Rule.Cascade);
+
+        Create.Table("appointment_bookings")
+            .WithColumn("id").AsGuid().NotNullable().PrimaryKey().WithDefault(SystemMethods.NewGuid)
+            .WithColumn("customer_person_id").AsGuid().NotNullable()
+            .WithColumn("appointment_id").AsGuid().NotNullable().ForeignKey("appointments", "id")
+            .WithColumn("creation_time").AsDateTime().NotNullable()
+            .WithColumn("cancellation_time").AsDateTime(); 
     }
 
     public override void Down()

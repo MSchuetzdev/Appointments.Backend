@@ -28,4 +28,11 @@ public interface IBookedAppointmentRepository
     /// <param name="appointmentId"></param>
     /// <returns></returns>
     public Task<BookedAppointment> GetBookedAppointmentByAppointmentIdAsync(Guid appointmentId);
+    
+    /// <summary>
+    /// Cancel an booked appointment by its appointment id
+    /// </summary>
+    /// <param name="appointmentId"></param>
+    /// <returns></returns>
+    public Task CancelBookedAppointmentAsync(Guid appointmentId);
 }

@@ -11,8 +11,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="MediatR" Version="14.0.0" />
       <PackageReference Include="Microsoft.Extensions.Options" Version="11.0.0-preview.2.26159.112" />
+      <PackageReference Include="TimeWarp.Mediator" Version="13.0.0" />
     </ItemGroup>
 
     <ItemGroup>

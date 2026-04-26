@@ -7,7 +7,7 @@ public static class ConfigureService
 {
     public static void AddApplication(this IServiceCollection services)
     {
-        services.AddMediatR(options =>
+        services.AddMediator(options =>
         {
             options.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
 

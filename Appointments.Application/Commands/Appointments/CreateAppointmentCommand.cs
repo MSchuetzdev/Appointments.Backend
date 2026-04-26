@@ -1,6 +1,6 @@
 using Appointments.Application.Common.Interfaces.Persistence;
 using Appointments.Domain.Entities.Appointment.Interfaces;
-using MediatR;
+using TimeWarp.Mediator;
 
 namespace Appointments.Application.Commands.Appointments;
 
