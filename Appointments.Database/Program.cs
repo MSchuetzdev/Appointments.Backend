@@ -1,8 +1,10 @@
-﻿using Appointments.Database.Migration;
+﻿using Appointments.Database.Migrations.Appointments;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.DependencyInjection;
 
-class Program
+namespace Appointments.Database;
+
+internal class Program
 {
     static void Main(string[] args)
     {

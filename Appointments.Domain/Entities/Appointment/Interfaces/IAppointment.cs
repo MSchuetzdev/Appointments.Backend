@@ -13,6 +13,11 @@ public interface IAppointment
     public string Name { get; set; }
 
     /// <summary>
+    /// Description of the appointment
+    /// </summary>
+    public string Description { get; set; }
+
+    /// <summary>
     /// Starttime of the appointment
     /// </summary>
     public DateTime StartTime { get; set; }
@@ -21,6 +26,16 @@ public interface IAppointment
     /// Endtime of the appointment
     /// </summary>
     public DateTime EndTime { get; set; }
+
+    /// <summary>
+    /// Id of the organization the appointment is created for 
+    /// </summary>
+    public Guid OrganizationId { get; set; }
+    
+    /// <summary>
+    /// Id of the person who created the appointment
+    /// </summary>
+    public Guid PersonId { get; set; }
 
     /// <summary>
     /// Time when the appointment is cancelled
@@ -33,7 +48,6 @@ public interface IAppointment
     /// <returns></returns>
     public bool IsAppointmentCancelled()
     {
-        return DeletionTime != null; 
+        return DeletionTime != null;
     }
-    
 }

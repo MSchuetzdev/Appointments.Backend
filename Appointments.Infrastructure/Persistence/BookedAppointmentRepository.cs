@@ -24,7 +24,7 @@ public class BookedAppointmentRepository(
     /// Base method for getting booked appointments
     /// </summary>
     /// <returns></returns>
-    private async Task<IEnumerable<BookedAppointment>> ReadAsync(string sqlFilter, object param)
+    private async Task<IEnumerable<AppointmentBooking>> ReadAsync(string sqlFilter, object param)
     {
         const string query = """
                              SELECT id, person_id, appointment_id 
@@ -44,11 +44,11 @@ public class BookedAppointmentRepository(
         var groupedAppointmentBookings = appointmentBookingsResult.GroupBy(x => x.AppointmentId)
             .ToDictionary(x => x.Key, elem => elem.ToList());
 
-        var bookedAppointments = new List<BookedAppointment>();
+        var bookedAppointments = new List<AppointmentBooking>();
 
         foreach (var appointment in appointments)
         {
-            var bookedAppointment = new BookedAppointment()
+            var bookedAppointment = new AppointmentBooking()
             {
                 Id = appointment.Id,
                 Name = appointment.Name,
@@ -85,7 +85,7 @@ public class BookedAppointmentRepository(
     }
 
     /// <inheritdoc/>>
-    public async Task<BookedAppointment> BookAppointmentAsync(BookAppointmentCommand command)
+    public async Task<AppointmentBooking> BookAppointmentAsync(BookAppointmentCommand command)
     {
         const string query = """
                              INSERT INTO appointment_bookings(customer_person_id, appointment_id)
@@ -112,7 +112,7 @@ public class BookedAppointmentRepository(
     /// <param name="appointmentId"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<BookedAppointment> GetBookedAppointmentByAppointmentIdAsync(Guid appointmentId)
+    public async Task<AppointmentBooking> GetBookedAppointmentByAppointmentIdAsync(Guid appointmentId)
     {
         const string sqlFilter = """
                                  CREATE TEMP TABLE TempBookedAppointmentBookings(id uuid PRIMARY KEY);
@@ -145,7 +145,7 @@ public class BookedAppointmentRepository(
         await connection.ExecuteAsync(query, param);
     }
 
-    public Task<BookedAppointment> ReadByIdAsync(Guid appointmentId)
+    public Task<AppointmentBooking> ReadByIdAsync(Guid appointmentId)
     {
         throw new NotImplementedException();
     }

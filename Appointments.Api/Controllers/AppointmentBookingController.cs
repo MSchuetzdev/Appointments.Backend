@@ -4,7 +4,7 @@ using TimeWarp.Mediator;
 
 namespace Appointments.Api.Controllers;
 
-public class BookedAppointmentController(IMediator mediator) : Controller
+public class AppointmentBookingController(IMediator mediator) : Controller
 {
     /// <summary>
     /// Cancel an booked appointment

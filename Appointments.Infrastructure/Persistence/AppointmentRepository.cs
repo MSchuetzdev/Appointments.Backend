@@ -2,29 +2,38 @@ using Appointments.Application.Commands.Appointments;
 using Appointments.Application.Common.Interfaces.Persistence;
 using Appointments.Domain.Entities.Appointment;
 using Appointments.Domain.Entities.Appointment.Interfaces;
-using Appointments.Domain.Options;
 using Appointments.Infrastructure.Common.Interfaces;
 using Appointments.Infrastructure.Common.Models.Record;
 using Dapper;
-using Microsoft.Extensions.Options;
 
 namespace Appointments.Infrastructure.Persistence;
 
 public class AppointmentRepository(
-    ISqlConnectionProvider sqlConnectionProvider,
-    IOptions<ApiUrls> options,
-    IBookedAppointmentRepository bookedAppointmentRepository
+    ISqlConnectionProvider sqlConnectionProvider
 )
     : IAppointmentRepository
 {
-    private readonly HttpClient _client = new HttpClient();
-
     /// <inheritdoc/>
     public async Task<IAppointment> CreateAsync(CreateAppointmentCommand entity)
     {
         const string createQuery = """
-                                       INSERT INTO appointments (name, start_time, end_time)
-                                       VALUES (:Name, :StartTime, :EndTime)
+                                       INSERT INTO appointments (
+                                                                 name,
+                                                                 start_time,
+                                                                 end_time,
+                                                                 deletion_time,
+                                                                 creator_person_id,
+                                                                 appointment_kind_id,
+                                                                 host_organization_id
+                                                                 )
+                                       VALUES (:Name,
+                                               :StartTime,
+                                               :EndTime,
+                                               :DeletionTime,
+                                               :CreatorPersonId,
+                                               :AppointmentKindId,
+                                               :HostOrganizationId
+                                               )
                                        RETURNING id; 
                                    """;
 
@@ -35,6 +44,10 @@ public class AppointmentRepository(
             entity.Name,
             entity.StartTime,
             entity.EndTime,
+            entity.DeletionTime,
+            entity.CreatorPersonId,
+            entity.AppointmentKindId,
+            entity.HostOrganizationId
         });
 
         return await ReadByIdAsync(appointmentId);
@@ -136,7 +149,7 @@ public class AppointmentRepository(
 
         return await ReadByIdAsync(appointmentId);
     }
-    
+
     public Task<IEnumerable<Appointment>> ReadByIdsAsync(List<Guid> ids)
     {
         throw new NotImplementedException();

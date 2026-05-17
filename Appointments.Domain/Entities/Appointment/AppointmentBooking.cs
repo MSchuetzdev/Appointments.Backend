@@ -6,10 +6,13 @@ namespace Appointments.Domain.Entities.Appointment;
 /// <summary>
 /// Model of an booked appointment
 /// </summary>
-public class BookedAppointment : BaseEntity<Guid>, IAppointment
+public class AppointmentBooking : BaseEntity<Guid>, IAppointment
 {
     /// <inheritdoc/>
-    public string Name { get; set; } = ""; 
+    public string Name { get; set; } = "";
+
+    /// <inheritdoc/>>
+    public string? Description { get; set; }
 
     /// <inheritdoc/>
     public DateTime StartTime { get; set; }
@@ -18,8 +21,14 @@ public class BookedAppointment : BaseEntity<Guid>, IAppointment
     public DateTime EndTime { get; set; }
 
     /// <inheritdoc/>
+    public Guid OrganizationId { get; set; }
+
+    /// <inheritdoc/>
+    public Guid PersonId { get; set; }
+
+    /// <inheritdoc/>
     public DateTime? DeletionTime { get; set; }
-    
+
     /// <summary>
     /// Customer of the booked appointment
     /// </summary>

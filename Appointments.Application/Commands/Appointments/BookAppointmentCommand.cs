@@ -7,7 +7,7 @@ namespace Appointments.Application.Commands.Appointments;
 /// <summary>
 /// Comand for book an appointment
 /// </summary>
-public class BookAppointmentCommand : IRequest<BookedAppointment>
+public class BookAppointmentCommand : IRequest<AppointmentBooking>
 {
     /// <summary>
     /// Id of the appointment wich will be booked
@@ -21,9 +21,9 @@ public class BookAppointmentCommand : IRequest<BookedAppointment>
 }
 
 public class BookAppointmentCommandHandler(IBookedAppointmentRepository bookedAppointmentRepository)
-    : IRequestHandler<BookAppointmentCommand, BookedAppointment>
+    : IRequestHandler<BookAppointmentCommand, AppointmentBooking>
 {
-    public async Task<BookedAppointment> Handle(BookAppointmentCommand request, CancellationToken cancellationToken)
+    public async Task<AppointmentBooking> Handle(BookAppointmentCommand request, CancellationToken cancellationToken)
     {
         var appointment = await bookedAppointmentRepository.BookAppointmentAsync(request);
 

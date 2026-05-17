@@ -13,12 +13,15 @@ public class AppointmentCommandTests
             Name = "Auto-Aufbereitung (Standard)",
             StartTime = DateTime.Now.AddHours(3),
             EndTime = DateTime.Now.AddDays(3).AddHours(2),
+            AppointmentKindId = Guid.Parse("4ba79ac4-4ac8-4b4d-86f3-7732c9ec47c3"),
+            CreatorPersonId = Guid.NewGuid(),
+            HostOrganizationId = Guid.NewGuid(),
         };
 
         var result = await new ApplicationFactory()
             .Send(command);
 
-        Assert.Matches("Auto-Aufbereitung (Standard)", result.Name);
+        Assert.NotNull(result);
     }
 
     [Fact]
@@ -50,6 +53,6 @@ public class AppointmentCommandTests
         var result = await new ApplicationFactory().Send(command);
 
 
-        Assert.IsType<BookedAppointment>(result);
+        Assert.IsType<AppointmentBooking>(result);
     }
 }

@@ -9,16 +9,20 @@ public class Appointment : BaseEntity<Guid>, IAppointment
     public string Name { get; set; } = "";
 
     /// <inheritdoc/>>
+    public string? Description { get; set; }
+
+    /// <inheritdoc/>>
     public DateTime StartTime { get; set; }
 
-    /// <inheritdoc/>>
+    /// <inheritdoc/>
     public DateTime EndTime { get; set; }
-        
-    /*
-    /// <inheritdoc/>>
-    public Customer.Customer? Customer { get; set; }
-    */
 
-    /// <inheritdoc/>>
+    /// <inheritdoc/>
+    public Guid OrganizationId { get; set; }
+
+    /// <inheritdoc/>
+    public Guid PersonId { get; set; }
+
+    /// <inheritdoc/>
     public DateTime? DeletionTime { get; set; }
 }

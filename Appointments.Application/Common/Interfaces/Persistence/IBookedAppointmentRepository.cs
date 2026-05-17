@@ -13,21 +13,21 @@ public interface IBookedAppointmentRepository
     /// </summary>
     /// <param name="appointmentId"></param>
     /// <returns></returns>
-    public Task<BookedAppointment> ReadByIdAsync(Guid appointmentId);
+    public Task<AppointmentBooking> ReadByIdAsync(Guid appointmentId);
 
     /// <summary>
     /// Book an appointment
     /// </summary>
     /// <param name="command"></param>
     /// <returns></returns>
-    public Task<BookedAppointment> BookAppointmentAsync(BookAppointmentCommand command);
+    public Task<AppointmentBooking> BookAppointmentAsync(BookAppointmentCommand command);
 
     /// <summary>
     /// Get booked appointment by appointment id
     /// </summary>
     /// <param name="appointmentId"></param>
     /// <returns></returns>
-    public Task<BookedAppointment> GetBookedAppointmentByAppointmentIdAsync(Guid appointmentId);
+    public Task<AppointmentBooking> GetBookedAppointmentByAppointmentIdAsync(Guid appointmentId);
     
     /// <summary>
     /// Cancel an booked appointment by its appointment id
